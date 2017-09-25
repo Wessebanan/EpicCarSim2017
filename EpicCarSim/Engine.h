@@ -4,9 +4,9 @@
 class Engine : public sf::Drawable
 {
 private:
-
+	
 public:
-
+	float getAcceleration();
 };
 
 #endif

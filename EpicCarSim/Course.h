@@ -6,7 +6,7 @@ class Course : public sf::Drawable
 private:
 
 public:
-
+	sf::Texture getTexture();
 };
 
 #endif

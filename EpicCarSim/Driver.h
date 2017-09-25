@@ -4,9 +4,9 @@
 class Driver
 {
 private:
-
+	
 public:
-
+	float getThrottle();
 };
 
 #endif

@@ -6,7 +6,8 @@ class Game
 private:
 
 public:
-
+	void update();
+	void render();
 };
 
 #endif
