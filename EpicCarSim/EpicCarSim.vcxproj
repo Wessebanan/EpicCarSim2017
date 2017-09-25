@@ -148,7 +148,14 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Car.h" />
+    <ClInclude Include="Course.h" />
+    <ClInclude Include="Driver.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Includes.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Race.h" />
+    <ClInclude Include="Wheel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

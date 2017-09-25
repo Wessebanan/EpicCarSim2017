@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+#include"Includes.h"
 
 int main()
 {
@@ -19,6 +19,5 @@ int main()
 		window.draw(shape);
 		window.display();
 	}
-
 	return 0;
 }
