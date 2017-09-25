@@ -132,6 +132,7 @@ void Menu::update(sf::Window &window, float gameTime)
 				this->currMenu = NONE;
 				break;
 			case NONE:
+				break;
 				//TODO: Switch state to race.
 			}			
 		}
