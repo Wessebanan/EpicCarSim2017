@@ -19,39 +19,40 @@ Menu::Menu()
 	for (int i = 0; i < 5; i++)
 	{
 		//TODO: Give 'em names.
-		this->carMenu[i].setString(std::string("car ") + std::to_string(i+1));
-		this->carMenu[i].setFont(this->menuFont);
-		this->carMenu[i].setCharacterSize(40);
-		this->carMenu[i].setColor(sf::Color::Black);
-		this->carMenu[i].setPosition(posVec);
+		this->carMenu[i].setString			(std::string("car ") + std::to_string(i+1));
+		this->carMenu[i].setFont			(this->menuFont);
+		this->carMenu[i].setCharacterSize	(40);
+		this->carMenu[i].setColor			(sf::Color::Black);
+		this->carMenu[i].setPosition		(posVec);
 
-		this->wheelMenu[i].setString(std::string("wheel ") + std::to_string(i + 1));
-		this->wheelMenu[i].setFont(this->menuFont);
-		this->wheelMenu[i].setCharacterSize(40);
-		this->wheelMenu[i].setColor(sf::Color::Black);
-		this->wheelMenu[i].setPosition(posVec);
+		this->wheelMenu[i].setString		(std::string("wheel ") + std::to_string(i + 1));
+		this->wheelMenu[i].setFont			(this->menuFont);
+		this->wheelMenu[i].setCharacterSize	(40);
+		this->wheelMenu[i].setColor			(sf::Color::Black);
+		this->wheelMenu[i].setPosition		(posVec);
 
-		this->courseMenu[i].setString(std::string("course ") + std::to_string(i + 1));
-		this->courseMenu[i].setFont(this->menuFont);
+		this->courseMenu[i].setString		(std::string("course ") + std::to_string(i + 1));
+		this->courseMenu[i].setFont			(this->menuFont);
 		this->courseMenu[i].setCharacterSize(40);
-		this->courseMenu[i].setColor(sf::Color::Black);
-		this->courseMenu[i].setPosition(posVec);
-
-		this->engineMenu[i].setString(std::string("engine ") + std::to_string(i + 1));
-		this->engineMenu[i].setFont(this->menuFont);
+		this->courseMenu[i].setColor		(sf::Color::Black);
+		this->courseMenu[i].setPosition		(posVec);
+											
+		this->engineMenu[i].setString		(std::string("engine ") + std::to_string(i + 1));
+		this->engineMenu[i].setFont			(this->menuFont);
 		this->engineMenu[i].setCharacterSize(40);
-		this->engineMenu[i].setColor(sf::Color::Black);
-		this->engineMenu[i].setPosition(posVec);
+		this->engineMenu[i].setColor		(sf::Color::Black);
+		this->engineMenu[i].setPosition		(posVec);
 		
-		this->clickBoxes[i].left = 400;
-		this->clickBoxes[i].top = posVec.y;
-		this->clickBoxes[i].height = 40;
-		this->clickBoxes[i].width = 300;
+		this->clickBoxes[i].left	= 400;
+		this->clickBoxes[i].top		= posVec.y;
+		this->clickBoxes[i].height	= 40;
+		this->clickBoxes[i].width	= 300;
+
 		posVec.y += 70;
-	}
-	
+	}	
 
 	this->currMenu = CAR;
+
 	this->cooldown = 0;
 	this->onCooldown = false;
 }
