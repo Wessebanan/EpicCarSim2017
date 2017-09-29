@@ -1,8 +1,15 @@
 #include"Includes.h"
+#include<Windows.h>
 
 int main()
 {
-	Game game;
+	//Game game;
+	Driver driver;
+	while (1)
+	{
+		driver.update();
+		Sleep(300);
+	}
 	//game.run();
 	/*while (window.isOpen())
 	{
