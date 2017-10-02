@@ -39,7 +39,7 @@ void Game::goToMenu()
 void Game::goToRace()
 {
 	this->currentState = GameState::race;
-	this->race.setupRace(0, 0, 0, 0);
+	this->race.setup(0, 0, 0, 0);
 }
 
 void Game::render(sf::RenderWindow& window)

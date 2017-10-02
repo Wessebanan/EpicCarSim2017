@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="Course.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="Engine.cpp" />
