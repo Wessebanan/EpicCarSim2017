@@ -25,7 +25,7 @@ bool Race::endOfRace()
 	return this->finished;
 }
 
-void Race::setupRace(const int car, const int engine, const int wheels, const int course)
+void Race::setup(const int car, const int engine, const int wheels, const int course)
 {
 	if (this->currentCourse)
 	{
