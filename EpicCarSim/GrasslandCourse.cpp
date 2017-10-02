@@ -19,9 +19,9 @@ int GrasslandCourse::init()
 	// add checkpoints
 	sf::RectangleShape sf;
 	sf.setFillColor(sf::Color());
-	sf.setSize(sf::Vector2f(10, 100));
+	sf.setSize(sf::Vector2f(10, 110));
 
-	sf.setPosition(480, 480);
+	sf.setPosition(370, 490);
 	this->addCheckpoint(sf);
 
 	return 0;
