@@ -1,10 +1,10 @@
 #ifndef GLOBAL_DEFS_H
 #define GLOBAL_DEFS_H
 
-const int nCars = 4;
-const int nWheels = 2;
-const int nCourses = 1;
-const int nEngines = 3;
+const int nCars		= 4;
+const int nWheels	= 2;
+const int nCourses	= 1;
+const int nEngines	= 3;
 
 struct Selects
 {
@@ -16,11 +16,18 @@ struct Selects
 
 enum CurrentMenu
 {
-	CAR = 1,
-	ENGINE = 2,
-	WHEEL = 3,
-	COURSE = 4,
-	NONE = 5
+	CAR		= 1,
+	ENGINE	= 2,
+	WHEEL	= 3,
+	COURSE	= 4,
+	NONE	= 5
+};
+
+enum GearChange
+{
+	NONE	= 0,
+	UP		= 1,
+	DOWN	= 2
 };
 
 #endif
