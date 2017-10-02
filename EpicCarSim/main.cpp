@@ -1,17 +1,14 @@
-#include"Includes.h"
-#include<Windows.h>
+#include "Includes.h"
+#include <crtdbg.h>
 
 int main()
 {
-	//Game game;
-	Driver driver;
-	while (1)
-	{
-		driver.update();
-		Sleep(300);
-	}
-	//game.run();
-	/*while (window.isOpen())
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	Game game;
+	sf::RenderWindow window(sf::VideoMode(800, 600), "EpicCarSim");
+
+	while (window.isOpen())
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -20,9 +17,12 @@ int main()
 				window.close();
 		}
 
+		game.update();
+
 		window.clear();
-		window.draw(shape);
+		game.render(window);
 		window.display();
-	}*/
+	}
+
 	return 0;
 }
