@@ -1,31 +1,35 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 #include"Includes.h"
-class Engine : public sf::Drawable
+class Engine
 {
 private:
+	enum CarType carType;
+
 	float rpms;
-	float torqueWheel;
+	float torqueTire;
 	float torqueEngine;
-	float power; //P
-	float angVelocity; //OmegaE
-	
-	float mass;
+	float angVelocity; //Engine.
+	float power;
+	float velocity;
+	float radius; //Wheel.
 
 	float finalDriveRatio; //G
 	int nGears;
 	float* gearRatios; //g for every gear.
 	int currGear;
+
+	bool gearChanged;
+
 public:
-	Engine(float mass, int nGears, float g[], float G);
+	Engine(enum CarType carType, float radius);
 	~Engine();
 
-	float calcTorque(float throttle);
+	float calc(); //Returns the maximum torque at current rpm.
 	float getTorque();
-	float getMass();
 	float getRpms();
 
-	void update(enum GearChange gearChange, float throttle);	
+	float update(float gameTime, enum GearChange gearChange, float throttle, float velocity);
 };
 
 #endif
