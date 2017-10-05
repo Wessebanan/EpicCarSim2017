@@ -56,7 +56,7 @@ float Engine::getRpms()
 	return this->rpms;
 }
 
-float Engine::update(float gameTime, enum GearChange gearChange, float throttle, float velocity)
+void Engine::update(float gameTime, enum GearChange gearChange, float throttle, float velocity)
 {
 	//Update everything.
 

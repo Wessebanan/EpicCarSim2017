@@ -29,7 +29,7 @@ public:
 	float getTorque();
 	float getRpms();
 
-	float update(float gameTime, enum GearChange gearChange, float throttle, float velocity);
+	void update(float gameTime, enum GearChange gearChange, float throttle, float velocity);
 };
 
 #endif
