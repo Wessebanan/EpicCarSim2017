@@ -20,9 +20,4 @@ enum CurrentMenu
 	NONE	= 4
 };
 
-enum CarType 
-{
-	AUDI_R8 = 0
-};
-
 #endif

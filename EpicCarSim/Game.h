@@ -14,6 +14,7 @@ class Game
 private:
 	Race race;
 	GameState currentState;
+	sf::Clock gametime;
 
 public:
 	Game();

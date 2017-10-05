@@ -1,8 +1,7 @@
 #include "Engine.h"
 
-Engine::Engine(float radius)
+Engine::Engine()
 {	
-	this->carType = carType;
 	this->gearChanged = false;
 	this->currGear = 0; //0: Neutral, -1: Reverse.
 	this->thrust = 0;
@@ -28,13 +27,34 @@ float Engine::getThrust()
 	return this->thrust;
 }
 
-void Engine::update(float gameTime, const Driver &driver, float velocity)
+int Engine::getGear()
+{
+	return this->currGear;
+}
+
+void Engine::update(const Driver &driver, float velocity)
 {
 	//Update everything.
 	
-	this->angVelocity	= velocity / this->radius;
-	this->rpm			= this->angVelocity * 60 / 2 * M_PI;
-	this->torqueEngine	= driver.getThrottle() * this->calcTorque();
+	this->angVelocity	= velocity * this->gearRatios[this->currGear + 1] * this->finalDriveRatio / this->radius;
+	this->rpm			= fabs(this->angVelocity * 30.f / (float)M_PI);
+
+	/*if (this->rpm < 10)
+	{
+		this->rpm = 10;
+	}*/
+
+	if (this->rpm < this->redline)
+	{
+		this->torqueEngine = driver.getThrottle() * this->calcTorque();
+	}
+
+	else
+	{
+		//Dead?
+		this->torqueEngine = 0;
+	}
+
 	this->torqueWheel	= this->torqueEngine * this->gearRatios[currGear + 1] * this->finalDriveRatio;
 	this->thrust		= this->torqueWheel / this->radius;
 

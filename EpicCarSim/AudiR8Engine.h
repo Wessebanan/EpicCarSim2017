@@ -10,6 +10,7 @@ public:
 	~AudiR8Engine();
 
 	float calcTorque();
+	float calcPower();
 };
 
 #endif

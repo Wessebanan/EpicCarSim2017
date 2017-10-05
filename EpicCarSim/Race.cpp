@@ -4,16 +4,23 @@ Race::Race()
 {
 	this->currentCourse = nullptr;
 	this->finished = false;
+	this->car = new AudiR8();
 }
 
 Race::~Race()
 {
 	this->clean();
+
+	if (this->car)
+	{
+		delete this->car;
+		this->car = nullptr;
+	}
 }
 
-void Race::update()
+void Race::update(float gametime)
 {
-	this->car.update();
+	this->car->update(gametime);
 }
 
 bool Race::endOfRace()
@@ -51,4 +58,5 @@ void Race::clean()
 void Race::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(*this->currentCourse);
+	target.draw(*this->car);
 }

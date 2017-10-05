@@ -3,6 +3,7 @@
 Game::Game() 
 {
 	// Which state to go to
+
 	this->goToRace();
 }
 
@@ -21,7 +22,7 @@ void Game::update()
 
 
 	case GameState::GS_RACE:
-			this->race.update();
+			this->race.update(this->gametime.restart().asSeconds());
 
 			if (this->race.endOfRace())
 				this->goToMenu();

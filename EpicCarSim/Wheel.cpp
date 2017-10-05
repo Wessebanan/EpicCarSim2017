@@ -2,7 +2,7 @@
 
 float Wheel::getRadius()
 {
-	return 0.0f;
+	return this->radius;
 }
 
 float Wheel::getFriction()
@@ -10,6 +10,7 @@ float Wheel::getFriction()
 	return 0.0f;
 }
 
-void Wheel::draw(sf::RenderTarget & target, sf::RenderStates states)
+void Wheel::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+
 }
