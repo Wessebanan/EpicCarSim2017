@@ -17,7 +17,7 @@ Race::~Race()
 
 void Race::update()
 {
-	
+	this->car.update();
 }
 
 bool Race::endOfRace()

@@ -3,12 +3,14 @@
 
 #include "SFML/Graphics.hpp"
 #include "GrasslandCourse.h"
+#include "Car.h"
 
 class Race : public sf::Drawable
 {
 private:
 	Course* currentCourse;
 	bool finished;
+	Car car;
 
 public:
 	Race();
