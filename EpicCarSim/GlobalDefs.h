@@ -22,7 +22,7 @@ enum CurrentMenu
 
 enum GearChange
 {
-	NONE	= 0,
+	NOCHANGE= 0,
 	UP		= 1,
 	DOWN	= 2
 };
