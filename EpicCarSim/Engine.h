@@ -4,10 +4,12 @@
 class Engine
 {
 private:
+
+protected:
 	enum CarType carType;
 
-	float rpms;
-	float torqueTire;
+	float rpm;
+	float torqueWheel;
 	float torqueEngine;
 	float angVelocity; //Engine.
 	float power;
@@ -21,15 +23,17 @@ private:
 
 	bool gearChanged;
 
+	float thrust; 
+
 public:
-	Engine(enum CarType carType, float radius);
+	Engine(float radius);
 	~Engine();
 
-	float calc(); //Returns the maximum torque at current rpm.
+	virtual float calcTorque() = 0; //Returns the maximum torque at current rpm.
 	float getTorque();
-	float getRpms();
+	float getRpm();
 
-	void update(float gameTime, enum GearChange gearChange, float throttle, float velocity);
+	void update(float gameTime, const Driver &driver, float velocity);
 };
 
 #endif

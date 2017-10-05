@@ -20,13 +20,6 @@ enum CurrentMenu
 	NONE	= 4
 };
 
-enum GearChange
-{
-	NOCHANGE= 0,
-	UP		= 1,
-	DOWN	= 2
-};
-
 enum CarType 
 {
 	AUDI_R8 = 0
