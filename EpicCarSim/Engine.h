@@ -32,6 +32,7 @@ public:
 	virtual float calcTorque() = 0; //Returns the maximum torque at current rpm.
 	float getTorque();
 	float getRpm();
+	float getThrust();
 
 	void update(float gameTime, const Driver &driver, float velocity);
 };

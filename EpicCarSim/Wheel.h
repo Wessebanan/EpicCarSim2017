@@ -9,6 +9,7 @@ public:
 	float getRadius();
 	float getFriction();
 
+	void draw(sf::RenderTarget &target, sf::RenderStates states);
 };
 
 #endif

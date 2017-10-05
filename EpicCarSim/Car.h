@@ -3,15 +3,17 @@
 
 //#include "Includes.h"
 #include "Driver.h"
+#include "Wheel.h"
+#include "Engine.h"
 #include "SFML\Graphics.hpp"
 
 class Car : public sf::Drawable
 {
 private:
-	/*
+	
 	Wheel wheels[4];
-	Engine engine;
-	*/
+	Engine* engine;
+	
 	Driver driver;
 
 	float velocity;

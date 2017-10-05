@@ -5,19 +5,19 @@ void Driver::update()
 	this->gear <<= 2;
 	this->updateJoystick();
 }
-float Driver::getThrottle()
+float Driver::getThrottle()const
 {
 	return this->acceleration;
 }
-float Driver::getAxisX()
+float Driver::getAxisX()const
 {
 	return this->x;
 }
-bool Driver::getGearDown()
+bool Driver::getGearDown()const
 {
 	return !(this->gear & 0x8) && (this->gear & 0x2);
 }
-bool Driver::getGearUp()
+bool Driver::getGearUp()const
 {
 	return !(this->gear & 0x4) && (this->gear & 0x1);
 }

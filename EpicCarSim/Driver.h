@@ -35,10 +35,10 @@ public:
 	virtual ~Driver() {};
 
 	void update();
-	float getThrottle();
-	float getAxisX();
-	bool getGearDown();
-	bool getGearUp();
+	float getThrottle()const;
+	float getAxisX()const;
+	bool getGearDown()const;
+	bool getGearUp()const;
 
 private:
 	float x, y, rotation, length, acceleration;
