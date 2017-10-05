@@ -1,11 +1,12 @@
 #ifndef GAME_H
 #define GAME_H
+
 #include "Race.h"
 #include "SFML/Graphics.hpp"
 
 enum GameState {
-	race,
-	menu
+	GS_RACE,
+	GS_MENU
 };
 
 class Game
