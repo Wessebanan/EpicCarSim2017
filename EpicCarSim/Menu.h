@@ -10,8 +10,7 @@ private:
 	sf::Sprite menuSprite;
 
 	sf::Text carMenu	[nCars];
-	sf::Text engineMenu	[nEngines];
-	sf::Text wheelMenu	[nWheels];
+	sf::Text tireMenu	[nTires];
 	sf::Text courseMenu	[nCourses];
 
 	sf::Font menuFont;
@@ -24,7 +23,7 @@ private:
 	float cooldown;
 	bool onCooldown;
 public:
-	Menu(std::string cars[], std::string engines[], std::string wheels[], std::string courses[]);
+	Menu(std::string cars[], std::string tires[], std::string courses[]);
 	~Menu();
 
 	struct Selects getSelects();

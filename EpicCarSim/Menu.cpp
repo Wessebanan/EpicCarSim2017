@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(std::string cars[], std::string engines[], std::string wheels[], std::string courses[])
+Menu::Menu(std::string cars[], std::string tires[], std::string courses[])
 {
 	//Better font mayb? :thinking:
 	if (!this->menuFont.loadFromFile("../Fonts/arial.ttf"))
@@ -16,9 +16,9 @@ Menu::Menu(std::string cars[], std::string engines[], std::string wheels[], std:
 
 	sf::Vector2f posVec(450, 220);
 
-	int nOpts[] = { nCars, nWheels, nCourses, nEngines };
+	int nOpts[] = { nCars, nTires, nCourses };
 	int mostOpts = 0;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		if (mostOpts < nOpts[i])
 		{
@@ -37,13 +37,13 @@ Menu::Menu(std::string cars[], std::string engines[], std::string wheels[], std:
 		posVec.y += 70;
 	}
 	posVec.y = 220;
-	for (int i = 0; i < nWheels; i++)
+	for (int i = 0; i < nTires; i++)
 	{
-		this->wheelMenu[i].setString(wheels[i]);
-		this->wheelMenu[i].setFont(this->menuFont);
-		this->wheelMenu[i].setCharacterSize(40);
-		this->wheelMenu[i].setColor(sf::Color::Black);
-		this->wheelMenu[i].setPosition(posVec);
+		this->tireMenu[i].setString(tires[i]);
+		this->tireMenu[i].setFont(this->menuFont);
+		this->tireMenu[i].setCharacterSize(40);
+		this->tireMenu[i].setColor(sf::Color::Black);
+		this->tireMenu[i].setPosition(posVec);
 		posVec.y += 70;
 	}
 	posVec.y = 220;
@@ -54,16 +54,6 @@ Menu::Menu(std::string cars[], std::string engines[], std::string wheels[], std:
 		this->courseMenu[i].setCharacterSize(40);
 		this->courseMenu[i].setColor(sf::Color::Black);
 		this->courseMenu[i].setPosition(posVec);
-		posVec.y += 70;
-	}
-	posVec.y = 220;
-	for (int i = 0; i < nEngines; i++)
-	{
-		this->engineMenu[i].setString(engines[i]);
-		this->engineMenu[i].setFont(this->menuFont);
-		this->engineMenu[i].setCharacterSize(40);
-		this->engineMenu[i].setColor(sf::Color::Black);
-		this->engineMenu[i].setPosition(posVec);
 		posVec.y += 70;
 	}
 	posVec.y = 220;
@@ -108,16 +98,10 @@ void Menu::draw(sf::RenderTarget &target, sf::RenderStates states)const
 			target.draw(this->carMenu[i], states);
 		}
 		break;
-	case ENGINE:
-		for (int i = 0; i < nEngines; i++)
+	case TIRE:
+		for (int i = 0; i < nTires; i++)
 		{
-			target.draw(this->engineMenu[i], states);
-		}
-		break;
-	case WHEEL:
-		for (int i = 0; i < nWheels; i++)
-		{
-			target.draw(this->wheelMenu[i], states);
+			target.draw(this->tireMenu[i], states);
 		}
 		break;
 	case COURSE:
@@ -131,7 +115,7 @@ void Menu::draw(sf::RenderTarget &target, sf::RenderStates states)const
 
 void Menu::update(sf::Window &window, float gameTime)
 {
-	if (this->onCooldown && this->cooldown < 1)
+	if (this->onCooldown && this->cooldown < .2)
 	{
 		this->cooldown += gameTime;
 	}
@@ -152,28 +136,17 @@ void Menu::update(sf::Window &window, float gameTime)
 				{
 					this->onCooldown = true;
 					this->selects.car = i;
-					this->currMenu = ENGINE;
+					this->currMenu = TIRE;
 				}
 			}
 			break;
-		case ENGINE:
-			for (int i = 0; i < nEngines; i++)
+		case TIRE:
+			for (int i = 0; i < nTires; i++)
 			{
 				if (this->clickBoxes[i].contains(sf::Vector2f(sf::Mouse::getPosition(window))) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					this->onCooldown = true;
-					this->selects.engine = i;
-					this->currMenu = WHEEL;					
-				}
-			}
-			break;
-		case WHEEL:
-			for (int i = 0; i < nWheels; i++)
-			{
-				if (this->clickBoxes[i].contains(sf::Vector2f(sf::Mouse::getPosition(window))) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
-				{
-					this->onCooldown = true;
-					this->selects.wheel = i;
+					this->selects.tire = i;
 					this->currMenu = COURSE;
 				}
 			}
@@ -188,8 +161,6 @@ void Menu::update(sf::Window &window, float gameTime)
 					this->currMenu = NONE;
 				}
 			}	
-			break;
-		default:
 			break;
 		}
 	}
