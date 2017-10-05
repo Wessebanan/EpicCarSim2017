@@ -8,16 +8,12 @@ Race::Race()
 
 Race::~Race()
 {
-	if (this->currentCourse)
-	{
-		delete this->currentCourse;
-		this->currentCourse = nullptr;
-	}
+	this->clean();
 }
 
 void Race::update()
 {
-	
+	this->car.update();
 }
 
 bool Race::endOfRace()
@@ -27,15 +23,29 @@ bool Race::endOfRace()
 
 void Race::setup(const int car, const int engine, const int wheels, const int course)
 {
+	this->setCourse(course);
+	this->finished = false;
+}
+
+void Race::setCourse(const int course)
+{
+	this->clean();
+
+	if (course == GRASSLAND)
+		this->currentCourse = new GrasslandCourse();
+	else
+		this->currentCourse = nullptr;
+
+	this->currentCourse->init();
+}
+
+void Race::clean()
+{
 	if (this->currentCourse)
 	{
 		delete this->currentCourse;
 		this->currentCourse = nullptr;
 	}
-
-	this->currentCourse = new GrasslandCourse();
-	this->currentCourse->init();
-	this->finished = false;
 }
 
 void Race::draw(sf::RenderTarget& target, sf::RenderStates states) const

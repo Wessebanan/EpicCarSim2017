@@ -1,10 +1,10 @@
 #ifndef DRIVER_H
 #define DRIVER_H
-#include"Includes.h"
 #include<SFML\Window\Joystick.hpp>
 #include<SFML\Window\Keyboard.hpp>
 #define _USE_MATH_DEFINES
 #include<math.h>
+#include <iostream>
 
 #define TOTAL_BUTTONS 8
 #define DEAD_ZONE 0.25f
@@ -26,33 +26,19 @@ private:
 		x_axis = sf::Joystick::X,
 		y_axis = sf::Joystick::Y,
 		trigger = sf::Joystick::Z,
-		gear_down = 0,
-		gear_up = 1
+		gear_down = 4,
+		gear_up = 5
 	};
 	
 public:
 	Driver() {};
 	virtual ~Driver() {};
 
-	void update() {
-		this->gear <<= 2;
-		this->updateJoystick();
-
-
-		/*
-		std::cout << "x: " << this->x << std::endl
-			<< "y: " << this->y << std::endl
-			<< "Rotation: " << this->rotation << std::endl
-			<< "Lenght: " << this->length << std::endl;
-		*/
-
-		/*
-		std::cout << "Connected: " << (sf::Joystick::isConnected(0) ? "Yes" : "No") << std::endl
-			<< "X: " << sf::Joystick::getAxisPosition(0, sf::Joystick::X) << std::endl
-			<< "Y: " << sf::Joystick::getAxisPosition(0, sf::Joystick::Y) << std::endl;
-		*/
-	}
-	float getThrottle() { return 0.f; };
+	void update();
+	float getThrottle();
+	float getAxisX();
+	bool getGearDown();
+	bool getGearUp();
 
 private:
 	float x, y, rotation, length, acceleration;

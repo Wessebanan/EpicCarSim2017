@@ -16,11 +16,11 @@ void Game::update()
 	switch (this->currentState)
 	{
 
-	case GameState::menu:
+	case GameState::GS_MENU:
 			break;
 
 
-	case GameState::race:
+	case GameState::GS_RACE:
 			this->race.update();
 
 			if (this->race.endOfRace())
@@ -32,13 +32,13 @@ void Game::update()
 // Change state to menu
 void Game::goToMenu()
 {
-	this->currentState = GameState::menu;
+	this->currentState = GameState::GS_MENU;
 }
 
 // Change state to race
 void Game::goToRace()
 {
-	this->currentState = GameState::race;
+	this->currentState = GameState::GS_RACE;
 	this->race.setup(0, 0, 0, 0);
 }
 
@@ -46,10 +46,10 @@ void Game::render(sf::RenderWindow& window)
 {
 	switch (this->currentState)
 	{
-	case GameState::menu:
+	case GameState::GS_MENU:
 		break;
 
-	case GameState::race:
+	case GameState::GS_RACE:
 		window.draw(this->race);
 		break;
 

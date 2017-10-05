@@ -1,5 +1,26 @@
 #include "Driver.h"
 #define KEYDOWN(x) sf::Keyboard::isKeyPressed((sf::Keyboard::Key)x)
+void Driver::update()
+{
+	this->gear <<= 2;
+	this->updateJoystick();
+}
+float Driver::getThrottle()
+{
+	return this->acceleration;
+}
+float Driver::getAxisX()
+{
+	return this->x;
+}
+bool Driver::getGearDown()
+{
+	return !(this->gear & 0x8) && (this->gear & 0x2);
+}
+bool Driver::getGearUp()
+{
+	return !(this->gear & 0x4) && (this->gear & 0x1);
+}
 void Driver::updateJoystick()
 {
 	sf::Joystick::update();
@@ -10,18 +31,19 @@ void Driver::updateJoystick()
 	{
 		this->x = this->y = this->length = this->rotation = 0.f;
 	}
-	else {
+	else 
+	{
 		this->rotation = tanhf(this->x / this->y)*(float)M_PI;
 	}
 
-	this->acceleration = sf::Joystick::getAxisPosition(0, (sf::Joystick::Axis)controller_keys::trigger) / 100.f; // JOYSTICK R DOESN'T WORK FOR ME :<
+	this->acceleration = sf::Joystick::getAxisPosition(0, (sf::Joystick::Axis)controller_keys::trigger) / -100.f;
 
-	//this->gear |= (sf::Joystick::isButtonPressed(0,0) ? 
+	this->gear |= (sf::Joystick::isButtonPressed(0, controller_keys::gear_down) ? 0x2 : 0x0) |
+		(sf::Joystick::isButtonPressed(0, controller_keys::gear_up) ? 0x1 : 0x0);
 }
 
 void Driver::updateKeyboard()
 {
-	//this->x_axis = sf::Keyboard::isKeyPressed((sf::Keyboard::Key)LEFT) ? 1.0f : 
 	this->x = KEYDOWN(keyboard_keys::RIGHT) ? 1.0f : KEYDOWN(keyboard_keys::LEFT) ? -1.0f : 0.0f;
 	this->y = KEYDOWN(keyboard_keys::UP) ? 1.0f : KEYDOWN(keyboard_keys::DOWN) ? -1.0f : 0.0f;
 	this->acceleration = KEYDOWN(keyboard_keys::A) ? 1.0f : 0.0f;
