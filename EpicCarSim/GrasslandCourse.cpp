@@ -29,7 +29,7 @@ int GrasslandCourse::init()
 
 int GrasslandCourse::getCondition(const int x, const int y)
 {
-	int returnValue = 0;
+	int returnValue = -1;
 	sf::Color currentCondition = this->getTrackTexture().copyToImage().getPixel(x, y);
 
 	// What color each condition have (to compare against) 

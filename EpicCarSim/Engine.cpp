@@ -37,14 +37,14 @@ void Engine::update(const Driver &driver, float velocity)
 	//Update everything.
 	
 	this->angVelocity	= velocity * this->gearRatios[this->currGear + 1] * this->finalDriveRatio / this->radius;
-	this->rpm			= fabs(this->angVelocity * 30.f / (float)M_PI);
+	this->rpm			= this->angVelocity * 30.f / (float)M_PI;
 
-	/*if (this->rpm < 10)
+	if (this->rpm < 0)
 	{
-		this->rpm = 10;
-	}*/
+		this->rpm = 0;
+	}
 
-	if (this->rpm < this->redline)
+	if (this->rpm < 10000000000)
 	{
 		this->torqueEngine = driver.getThrottle() * this->calcTorque();
 	}

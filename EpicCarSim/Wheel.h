@@ -6,6 +6,8 @@ class Wheel : public sf::Drawable
 {
 private:
 	float radius;
+	float friction;
+	float rollingFriction;
 public:
 	float getRadius();
 	float getFriction();
