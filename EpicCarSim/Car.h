@@ -8,7 +8,7 @@
 #include "SFML\Graphics.hpp"
 #include <cmath>
 #define SCALE 0.000001
-#define ANGULAR_CONVERSION 57.32484076433121
+#define ANGLE_CONVERSION 180 / M_PI
 
 class Car : public sf::Drawable
 {
@@ -27,10 +27,12 @@ protected:
 private:
 	Driver driver;
 	float velocity;
-	sf::Transformable direction;
+	sf::RectangleShape direction;
 
 	sf::Text rpmNgear;
 	sf::Font arial;
+
+	sf::RectangleShape testDir;
 public:
 	Car(float width, float length);
 	~Car();
