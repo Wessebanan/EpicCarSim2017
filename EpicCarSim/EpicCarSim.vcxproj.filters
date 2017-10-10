@@ -51,6 +51,9 @@
     <ClCompile Include="AudiR8.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HiPerformanceWheel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes.h">
@@ -90,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AudiR8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HiPerformanceWheel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

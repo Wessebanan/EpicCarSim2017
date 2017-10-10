@@ -7,13 +7,15 @@
 #include "Engine.h"
 #include "SFML\Graphics.hpp"
 #include <cmath>
-#define SCALE 0.000001
+#include "HiPerformanceWheel.h"
+#define SCALE 10
 #define ANGLE_CONVERSION 180 / M_PI
+#define GRAVITY 9.82
 
 class Car : public sf::Drawable
 {
 protected:
-	Wheel wheels[4];
+	Wheel* wheels;
 	Engine* engine;
 	float mass;
 	float Cd;
@@ -27,18 +29,18 @@ protected:
 private:
 	Driver driver;
 	float velocity;
-	sf::RectangleShape direction;
 
 	sf::Text rpmNgear;
 	sf::Font arial;
 
-	sf::RectangleShape testDir;
+	sf::Vector2f direction;
+	sf::Transform trans;
 public:
 	Car(float width, float length);
 	~Car();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	void setup(const int car, const int engine, const int wheels);
-	void update(float gametime);
+	void update(float gametime, int condition); //0: grass, 1: dry asphalt, 2: wet asphalt.
 
 	sf::Vector2f getPosition();
 

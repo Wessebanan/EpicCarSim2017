@@ -4,7 +4,7 @@ Engine::Engine()
 {	
 	this->gearChanged = false;
 	this->currGear = 0; //0: Neutral, -1: Reverse.
-	this->thrust = 0;
+	this->thrust = 0.f;
 }
 
 Engine::~Engine()
@@ -39,14 +39,14 @@ void Engine::update(const Driver &driver, float velocity)
 	this->angVelocity	= velocity * this->gearRatios[this->currGear + 1] * this->finalDriveRatio / this->radius;
 	this->rpm			= this->angVelocity * 30.f / (float)M_PI;
 
-	if (this->rpm < 0)
+	if (this->rpm < this->baseline)
 	{
-		this->rpm = 0;
+		this->rpm = this->baseline;
 	}
 
-	if (this->rpm < 10000000000)
-	{
-		this->torqueEngine = driver.getThrottle() * this->calcTorque();
+	if (this->rpm < this->redline)
+	{	
+		this->torqueEngine = std::max(driver.getThrottle(), 0.0f) * this->calcTorque();//std::max to not have negative gas.
 	}
 
 	else

@@ -4,13 +4,20 @@
 
 class Wheel : public sf::Drawable
 {
-private:
+protected:
 	float radius;
-	float friction;
 	float rollingFriction;
+	float slidingFriction;
+	float brakeConstant;
 public:
+	Wheel(float radius);
+	~Wheel();
+
 	float getRadius();
-	float getFriction();
+	virtual void calcFriction(int condition) = 0;
+
+	float getRollingFriction();
+	float getSlidingFriction();
 
 	void draw(sf::RenderTarget &target, sf::RenderStates states)const;
 };

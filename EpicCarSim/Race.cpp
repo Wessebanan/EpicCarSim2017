@@ -20,7 +20,7 @@ Race::~Race()
 
 void Race::update(float gametime)
 {
-	this->car->update(gametime/*, this->currentCourse->getCondition(this->car.get*/);
+	this->car->update(gametime, this->currentCourse->getCondition(this->car->getPosition().x, this->car->getPosition().y));
 }
 
 bool Race::endOfRace()
