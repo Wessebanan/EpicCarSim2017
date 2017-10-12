@@ -43,6 +43,7 @@ public:
 	void update(float gametime, int condition); //0: grass, 1: dry asphalt, 2: wet asphalt.
 
 	sf::Vector2f getPosition();
+	void setPosition(sf::Vector2f position);
 
 	void setOrigin();
 };

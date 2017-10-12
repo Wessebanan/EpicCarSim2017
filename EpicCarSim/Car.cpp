@@ -11,6 +11,7 @@ Car::Car(float _width, float _length)
 	this->width = _width;
 	this->length = _length;
 
+	this->dimensions.setPosition(400, 400);
 	this->dimensions.setSize(sf::Vector2f(this->width, this->length));
 	this->setOrigin();
 
@@ -80,6 +81,11 @@ void Car::update(float gametime, int condition)
 sf::Vector2f Car::getPosition()
 {
 	return sf::Vector2f(this->dimensions.getGlobalBounds().left + this->width / 2.f, this->dimensions.getGlobalBounds().top + this->height / 2.f);
+}
+
+void Car::setPosition(sf::Vector2f position)
+{
+	this->dimensions.setPosition(position);
 }
 
 void Car::setOrigin()

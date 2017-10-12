@@ -2,9 +2,10 @@
 
 Course::Course()
 {
-	this->nrOfCheckpoints = 1;
+	// Must have a start position
+	this->nrOfCheckpoints = 0;
 	this->capacity = 1;
-	this->checkpoints = new sf::RectangleShape[this->nrOfCheckpoints];
+	this->checkpoints = new sf::RectangleShape[this->capacity];
 }
 
 Course::~Course()
@@ -61,4 +62,9 @@ void Course::increaseCapacity()
 	
 	delete[] this->checkpoints;
 	this->checkpoints = temp;
+}
+
+const sf::Vector2f& Course::getStartPosition()
+{
+	return sf::Vector2f(this->checkpoints[0].getPosition().x + (this->checkpoints[0].getGlobalBounds().width * 4), this->checkpoints[0].getPosition().y + this->checkpoints[0].getGlobalBounds().height / 2);
 }

@@ -26,6 +26,7 @@ public:
 	// Get condition for the current position
 	virtual int getCondition(const float x, const float y);
 
+	const sf::Vector2f& getStartPosition();
 
 	// Draw current track
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;

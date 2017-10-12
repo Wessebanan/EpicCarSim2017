@@ -31,6 +31,7 @@ bool Race::endOfRace()
 void Race::setup(const int car, const int engine, const int wheels, const int course)
 {
 	this->setCourse(course);
+	this->car->setPosition(this->currentCourse->getStartPosition());
 	this->finished = false;
 }
 
