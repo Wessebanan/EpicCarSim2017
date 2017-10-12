@@ -10,7 +10,7 @@ int main()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	Game game;
-	sf::RenderWindow window(sf::VideoMode(800, 600), "EpicCarSim");
+	sf::RenderWindow window(sf::VideoMode(1600, 900), "EpicCarSim");
 
 	sf::Clock timer; //To cap fps.
 

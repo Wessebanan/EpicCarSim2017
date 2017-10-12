@@ -103,5 +103,8 @@
     <Image Include="GrasslandCourse.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="GrasslandCourse1600x900.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

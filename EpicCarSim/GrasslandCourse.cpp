@@ -13,15 +13,15 @@ int GrasslandCourse::init()
 {
 	// set track
 	sf::Texture tempTrack;
-	tempTrack.loadFromFile("GrasslandCourse.bmp");
+	tempTrack.loadFromFile("GrasslandCourse1600x900.bmp");
 	this->setTrack(tempTrack);
 
 	// add checkpoints
 	sf::RectangleShape sf;
 	sf.setFillColor(sf::Color());
-	sf.setSize(sf::Vector2f(10, 110));
+	sf.setSize(sf::Vector2f(10, 220));
 
-	sf.setPosition(370, 490);
+	sf.setPosition(900, 665);
 	this->addCheckpoint(sf);
 
 	return 0;
