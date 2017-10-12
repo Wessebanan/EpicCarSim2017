@@ -3,7 +3,6 @@
 Game::Game() 
 {
 	// Which state to go to
-
 	this->goToRace();
 }
 

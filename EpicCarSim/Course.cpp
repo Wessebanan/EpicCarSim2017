@@ -2,7 +2,6 @@
 
 Course::Course()
 {
-	// Must have a start position
 	this->nrOfCheckpoints = 0;
 	this->capacity = 1;
 	this->checkpoints = new sf::RectangleShape[this->capacity];
@@ -18,11 +17,6 @@ Course::~Course()
 }
 
 int Course::init()
-{
-	return 0;
-}
-
-int Course::getCondition(const float x, const float y)
 {
 	return 0;
 }

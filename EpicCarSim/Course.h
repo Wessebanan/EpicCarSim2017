@@ -24,7 +24,7 @@ public:
 	virtual int init();
 
 	// Get condition for the current position
-	virtual int getCondition(const float x, const float y);
+	virtual int getCondition(const int x, const int y) = 0;
 
 	const sf::Vector2f& getStartPosition();
 

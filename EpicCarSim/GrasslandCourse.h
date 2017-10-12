@@ -12,7 +12,7 @@ public:
 	GrasslandCourse();
 	~GrasslandCourse();
 	int init();
-	int getCondition(const int x, const int y);
+	virtual int getCondition(const int x, const int y);
 };
 
 

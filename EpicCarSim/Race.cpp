@@ -10,12 +10,6 @@ Race::Race()
 Race::~Race()
 {
 	this->clean();
-
-	if (this->car)
-	{
-		delete this->car;
-		this->car = nullptr;
-	}
 }
 
 void Race::update(float gametime)
@@ -30,15 +24,15 @@ bool Race::endOfRace()
 
 void Race::setup(const int car, const int engine, const int wheels, const int course)
 {
+	this->clean();
 	this->setCourse(course);
+	this->car = new AudiR8();
 	this->car->setPosition(this->currentCourse->getStartPosition());
 	this->finished = false;
 }
 
 void Race::setCourse(const int course)
 {
-	this->clean();
-
 	if (course == GRASSLAND)
 		this->currentCourse = new GrasslandCourse();
 	else
@@ -53,6 +47,12 @@ void Race::clean()
 	{
 		delete this->currentCourse;
 		this->currentCourse = nullptr;
+	}
+	
+	if (this->car)
+	{
+		delete this->car;
+		this->car = nullptr;
 	}
 }
 
