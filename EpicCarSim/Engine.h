@@ -22,6 +22,7 @@ protected:
 	int nGears;
 	float* gearRatios; //g for every gear.
 	int currGear;
+	float breakCoefficient;
 
 	bool gearChanged;
 

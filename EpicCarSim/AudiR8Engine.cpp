@@ -25,6 +25,8 @@ AudiR8Engine::AudiR8Engine(float radius)
 	this->redline = 8300.0f;
 	this->baseline = 1000.0f;
 
+	this->breakCoefficient = 0.74f;
+
 	this->radius = radius;
 }
 

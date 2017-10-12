@@ -61,7 +61,7 @@ void Car::update(float gametime, int condition)
 		force = -maxForce;
 	}
 
-	this->velocity += force / this->mass * gametime;
+	this->velocity += (force / this->mass) * gametime;
 	
 	float rotAngle = this->velocity * gametime * ANGLE_CONVERSION / this->length * sin(this->driver.getAxisX() * M_PI / 4);
 
@@ -71,9 +71,9 @@ void Car::update(float gametime, int condition)
 		this->trans.rotate(rotAngle);		
 	}
 	
-	this->dimensions.move(trans.transformPoint(this->direction) * this->velocity * gametime);
+	this->dimensions.move(trans.transformPoint(this->direction) * this->velocity * 10.f * gametime);
 
-	this->rpmNgear.setString(std::to_string(this->engine->getRpm()) + "\n" + std::to_string(this->engine->getGear()) + "\n" + std::to_string(this->velocity));
+	this->rpmNgear.setString("RPM: " + std::to_string(this->engine->getRpm()) + "\nCurrent Gear: " + std::to_string(this->engine->getGear()) + "\nVelocity (m/s): " + std::to_string(this->velocity) + " / " + std::to_string(this->velocity*3.6f) + "\nTotal Force: " + std::to_string(force) + "\nEngine Thrust: " + std::to_string(this->engine->getThrust()));
 	
 }
 

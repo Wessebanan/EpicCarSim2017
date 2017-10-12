@@ -44,9 +44,11 @@ void Engine::update(const Driver &driver, float velocity)
 		this->rpm = this->baseline;
 	}
 
+
+
 	if (this->rpm < this->redline)
 	{	
-		this->torqueEngine = std::max(driver.getThrottle(), 0.0f) * this->calcTorque();//std::max to not have negative gas.
+		this->torqueEngine = std::max(driver.getThrottle(), 0.01f) * this->calcTorque();//std::max to not have negative gas.
 	}
 
 	else

@@ -3,7 +3,10 @@
 void Driver::update()
 {
 	this->gear <<= 2;
-	this->updateJoystick();
+	if (sf::Joystick::isConnected(0))
+		this->updateJoystick();
+	else
+		this->updateKeyboard();
 }
 float Driver::getThrottle()const
 {
@@ -47,4 +50,7 @@ void Driver::updateKeyboard()
 	this->x = KEYDOWN(keyboard_keys::RIGHT) ? 1.0f : KEYDOWN(keyboard_keys::LEFT) ? -1.0f : 0.0f;
 	this->y = KEYDOWN(keyboard_keys::UP) ? 1.0f : KEYDOWN(keyboard_keys::DOWN) ? -1.0f : 0.0f;
 	this->acceleration = KEYDOWN(keyboard_keys::A) ? 1.0f : 0.0f;
+
+	this->gear |= (KEYDOWN(keyboard_keys::GEAR_DOWN) ? 0x2 : 0x0) |
+		(KEYDOWN(keyboard_keys::GEAR_UP) ? 0x1 : 0x0);
 }
