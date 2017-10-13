@@ -37,7 +37,7 @@ void Engine::update(const Driver &driver, float velocity)
 	//Update everything.
 	
 	this->angVelocity	= velocity * this->gearRatios[this->currGear + 1] * this->finalDriveRatio / this->radius;
-	this->rpm			= this->angVelocity * 30.f / (float)M_PI;
+	this->rpm			= std::fabs(this->angVelocity) * 30.f / (float)M_PI;
 
 	if (this->rpm < this->baseline)
 	{

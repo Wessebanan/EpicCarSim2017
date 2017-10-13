@@ -8,7 +8,8 @@
 #include "SFML\Graphics.hpp"
 #include <cmath>
 #include "HiPerformanceWheel.h"
-#define SCALE 10
+#define SCALE_FACTOR 5.f
+#define SCALE sf::Vector2f(SCALE_FACTOR, SCALE_FACTOR)
 #define ANGLE_CONVERSION 180 / M_PI
 #define GRAVITY 9.82
 
@@ -35,6 +36,9 @@ private:
 
 	sf::Vector2f direction;
 	sf::Transform trans;
+	sf::Vector2f centripetDir;
+	sf::Vector2f skidVelocity;
+
 public:
 	Car(float width, float length);
 	~Car();
@@ -44,6 +48,8 @@ public:
 
 	sf::Vector2f getPosition();
 	void setPosition(sf::Vector2f position);
+
+	float vecLength(sf::Vector2f vec);
 
 	void setOrigin();
 };
