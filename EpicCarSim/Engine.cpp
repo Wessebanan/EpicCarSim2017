@@ -48,14 +48,14 @@ void Engine::update(const Driver &driver, float velocity)
 
 	if (this->rpm < this->redline)
 	{	
-		this->torqueEngine = std::max(driver.getThrottle(), 0.01f) * this->calcTorque();//std::max to not have negative gas.
+		this->torqueEngine = std::max(driver.getThrottle(), 0.1f) * this->calcTorque();//std::max to not have negative gas.
 	}
 
-	else
-	{
-		//Dead?
-		this->torqueEngine = 0;
-	}
+	//else
+	//{
+	//	//Dead?
+	//	this->torqueEngine = 0;
+	//}
 
 	this->torqueWheel	= this->torqueEngine * this->gearRatios[currGear + 1] * this->finalDriveRatio;
 	this->thrust		= this->torqueWheel / this->radius;
@@ -68,4 +68,11 @@ void Engine::update(const Driver &driver, float velocity)
 	{
 		this->currGear--;
 	}
+
+
+	// DEBUG
+	/*if (this->rpm > 7000 && this->currGear < this->nGears)
+	{
+		this->currGear++;
+	}*/
 }
