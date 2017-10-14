@@ -13,16 +13,16 @@ int GrasslandCourse::init()
 {
 	// set track
 	sf::Texture tempTrack;
-	tempTrack.loadFromFile("GrasslandCourse1600x900.bmp");
+	tempTrack.loadFromFile("Drag.bmp");
 	this->setTrack(tempTrack);
 
 	// add checkpoints
-	sf::RectangleShape sf;
+	/*sf::RectangleShape sf;
 	sf.setFillColor(sf::Color());
 	sf.setSize(sf::Vector2f(10, 220));
 
 	sf.setPosition(900, 665);
-	this->addCheckpoint(sf);
+	this->addCheckpoint(sf);*/
 
 	return 0;
 }
@@ -50,10 +50,6 @@ int GrasslandCourse::getCondition(const int x, const int y)
 		else if (currentCondition == water)
 			returnValue = 2;
 	}
-
-	
-
-	
 
 	return returnValue;
 }

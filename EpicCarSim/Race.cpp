@@ -5,6 +5,8 @@ Race::Race()
 	this->currentCourse = nullptr;
 	this->finished = false;
 	this->car = new AudiR8();
+	this->gameOverTex.loadFromFile("Dead.bmp");
+	this->gameOver.setTexture(this->gameOverTex);
 }
 
 Race::~Race()
@@ -15,6 +17,14 @@ Race::~Race()
 void Race::update(float gametime)
 {
 	this->car->update(gametime, this->currentCourse->getCondition(this->car->getPosition().x, this->car->getPosition().y));
+	/*if (this->car->getPosition().x > 1596.f)
+	{
+		this->finished = true;
+	}*/
+	if (sf::Joystick::isButtonPressed(0, sf::Joystick::X) && this->car->engineBlown())
+	{
+		this->setup(0, 0, 0, 0);
+	}
 }
 
 bool Race::endOfRace()
@@ -27,7 +37,8 @@ void Race::setup(const int car, const int engine, const int wheels, const int co
 	this->clean();
 	this->setCourse(course);
 	this->car = new AudiR8();
-	this->car->setPosition(this->currentCourse->getStartPosition());
+	//this->car->setPosition(this->currentCourse->getStartPosition());
+	this->car->setPosition(sf::Vector2f(24.f, 370.f));
 	this->finished = false;
 }
 
@@ -58,6 +69,13 @@ void Race::clean()
 
 void Race::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(*this->currentCourse);
-	target.draw(*this->car);
+	if (!car->engineBlown())
+	{
+		target.draw(*this->currentCourse);
+		target.draw(*this->car);
+	}
+	else
+	{
+		target.draw(this->gameOver);
+	}
 }

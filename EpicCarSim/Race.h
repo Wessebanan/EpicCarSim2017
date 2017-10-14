@@ -14,6 +14,9 @@ private:
 	bool finished;
 	Car* car;
 
+	sf::Texture gameOverTex;
+	sf::Sprite gameOver;
+
 	void clean();
 
 public:

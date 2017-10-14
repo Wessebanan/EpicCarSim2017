@@ -10,6 +10,7 @@ AudiR8::AudiR8() : Car(2.04f, 4.43f)
 	this->mass			= 1640.0f;
 	this->wheelDistance = 2.65f;
 	this->area			= 2.01f;
+	this->brakeCoefficient = 0.62f;
 }
 
 AudiR8::~AudiR8()

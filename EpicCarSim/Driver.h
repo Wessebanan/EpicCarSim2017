@@ -40,6 +40,7 @@ public:
 	float getAxisX()const;
 	bool getGearDown()const;
 	bool getGearUp()const;
+	bool isApressed()const;
 
 private:
 	float x, y, rotation, length, acceleration;

@@ -24,6 +24,10 @@ bool Driver::getGearUp()const
 {
 	return !(this->gear & 0x4) && (this->gear & 0x1);
 }
+bool Driver::isApressed() const
+{
+	return sf::Joystick::isButtonPressed(0, sf::Joystick::X);
+}
 void Driver::updateJoystick()
 {
 	sf::Joystick::update();
@@ -43,6 +47,7 @@ void Driver::updateJoystick()
 
 	this->gear |= (sf::Joystick::isButtonPressed(0, controller_keys::gear_down) ? 0x2 : 0x0) |
 		(sf::Joystick::isButtonPressed(0, controller_keys::gear_up) ? 0x1 : 0x0);
+
 }
 
 void Driver::updateKeyboard()

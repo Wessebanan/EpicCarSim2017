@@ -22,11 +22,12 @@ protected:
 	int nGears;
 	float* gearRatios; //g for every gear.
 	int currGear;
-	float breakCoefficient;
+	float brakeCoefficient;
 
 	bool gearChanged;
+	bool engineBlown;
 
-	float thrust; 
+	float force; 
 
 public:
 	Engine();
@@ -36,8 +37,9 @@ public:
 	virtual float calcPower() = 0;
 	float getTorque();
 	float getRpm();
-	float getThrust();
+	float getForce();
 	int getGear();
+	bool blown();
 
 	void update(const Driver &driver, float velocity);
 };

@@ -27,6 +27,7 @@ protected:
 	float length;
 	float wheelDistance;
 	float area;
+	float brakeCoefficient;
 
 private:
 	Driver driver;
@@ -55,6 +56,8 @@ public:
 	float vecLength(sf::Vector2f vec);
 
 	void setOrigin();
+
+	bool engineBlown();
 };
 
 #endif
