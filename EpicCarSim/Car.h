@@ -12,6 +12,7 @@
 #define SCALE sf::Vector2f(SCALE_FACTOR, SCALE_FACTOR)
 #define ANGLE_CONVERSION 180 / M_PI
 #define GRAVITY 9.82
+#define TURN_SCALE 8.0f
 
 class Car : public sf::Drawable
 {
@@ -38,6 +39,8 @@ private:
 	sf::Transform trans;
 	sf::Vector2f centripetDir;
 	sf::Vector2f skidVelocity;
+
+	float turnFunction();
 
 public:
 	Car(float width, float length);

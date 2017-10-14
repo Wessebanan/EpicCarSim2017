@@ -16,7 +16,7 @@ Car::Car(float _width, float _length)
 	this->setOrigin();
 
 	this->direction = sf::Vector2f(0.f, -1.f);
-	this->centripetDir = sf::Vector2f(-1.f, 0.f);
+	this->centripetDir = sf::Vector2f(1.f, 0.f);
 }
 
 Car::~Car()
@@ -26,6 +26,7 @@ Car::~Car()
 		delete this->engine;
 		this->engine = nullptr;
 	}
+
 	if (this->wheels)
 	{
 		delete this->wheels;
@@ -38,21 +39,54 @@ void Car::setup(const int car, const int engine, const int wheels)
 
 }
 
+float Car::turnFunction()
+{
+	float turnValue = this->driver.getAxisX();
+
+	if (this->velocity <= 5.0f)
+		return turnValue;
+
+	else if (this->velocity <= 80.0f)
+		return turnValue - 0.012f * this->velocity * turnValue;
+
+	else
+		return turnValue * 0.1f;
+
+}
+
 void Car::update(float gametime, int condition)
 {
 	this->driver.update();
 	this->engine->update(this->driver, this->velocity);
 	this->wheels->calcFriction(condition);
-	
-	sf::Vector2f forwardForce = this->engine->getThrust() * this->direction; //Thrust force in car direction.
-	sf::Vector2f sidewaysForce(0.f, 0.f);
-	if (this->driver.getAxisX() < -0.05f || this->driver.getAxisX() > 0.05f)
-	{ //TODO: non-instant turning.
-		float radius = this->length / sin(this->driver.getAxisX() * M_PI / 4); //Turning radius if turning.
-		sidewaysForce = (this->mass * pow(this->velocity, 2) / radius) * this->centripetDir; //Centripetal force if turning.
-	}	
-	float maxForce = this->wheels->getSlidingFriction() * this->mass * GRAVITY;
 
+	float turn = 0.0f;
+	//sf::Vector2f forwardForce = this->engine->getThrust() * this->direction; //Thrust force in car direction.
+	//sf::Vector2f sidewaysForce(0.f, 0.f);
+
+	float rollingFriction = 0;
+	float dragForce = 0;
+	if (this->velocity > 0.05f || this->velocity < -0.05f)
+	{
+		turn = this->turnFunction();
+		rollingFriction = -this->wheels->getRollingFriction() * GRAVITY * this->mass;
+		dragForce = -0.5f * 1.23f * this->area * this->Cd * pow(this->velocity, 2);
+	}
+	float totalForce = this->engine->getThrust() + rollingFriction + dragForce;
+
+	float angle = this->velocity * sin(turn * M_PI / 4.f) * gametime / this->length;
+
+
+	sf::Vector2f forwardForce = this->direction * totalForce * cos(angle);
+	sf::Vector2f sidewaysForce = this->centripetDir * totalForce * sin(angle);
+
+	//if ((this->driver.getAxisX() < -0.05f || this->driver.getAxisX() > 0.05f) && (this->velocity > 0.05f || this->velocity < -0.05f))
+	//{ //TODO: non-instant turning.
+	//	float radius = this->length / sin(-this->driver.getAxisX() * M_PI / 4); //Turning radius if turning.
+	//	//sidewaysForce = (this->mass * pow(this->velocity, 2) / radius) * this->centripetDir; //Centripetal force if turning.
+	//}	
+
+	float maxForce = this->wheels->getSlidingFriction() * this->mass * GRAVITY;
 	if (this->vecLength(sidewaysForce) > maxForce)
 	{
 		sidewaysForce = maxForce * sidewaysForce / vecLength(sidewaysForce);
@@ -61,19 +95,21 @@ void Car::update(float gametime, int condition)
 	{
 		forwardForce = maxForce * forwardForce / vecLength(forwardForce);
 	}
-	
-	sf::Vector2f totalForce = forwardForce + sidewaysForce + (0.5f * 1.23f * this->area * this->Cd * pow(this->velocity, 2)) * -1.f * this->direction; //Drag force.
 
-	sf::Vector2f acceleration = totalForce / this->mass;
+	sf::Vector2f resultingForce = forwardForce + sidewaysForce;
+	sf::Vector2f acceleration = resultingForce / this->mass;
 	sf::Vector2f velocityVec = this->direction * this->velocity;
-	velocityVec += acceleration * gametime; //TODO: change sign based on direction of force.
-	this->velocity = sqrt(pow(velocityVec.x, 2) + pow(velocityVec.y, 2));
+	velocityVec += acceleration * gametime;							//TODO: change sign based on direction of force.
+	this->velocity = this->vecLength(velocityVec);
 
 	this->dimensions.move(velocityVec * gametime * SCALE_FACTOR);
 
-	if (this->driver.getAxisX() < -0.05f || this->driver.getAxisX() > 0.05f)
+	if (std::fabs(turn) > 0.05f && std::fabs(this->velocity) > 0.05f)
 	{
-		this->direction = velocityVec / velocity;
+		float rotation = -1.0f * turn / abs(turn) * acos(this->direction.x * resultingForce.x / this->vecLength(resultingForce) + this->direction.y * resultingForce.y / this->vecLength(resultingForce));
+		this->dimensions.rotate(angle * 180 / M_PI * -1.0f);
+
+		this->direction = resultingForce / this->vecLength(resultingForce);
 		this->centripetDir = sf::Vector2f(this->direction.y, -this->direction.x);
 	}
 
@@ -125,12 +161,13 @@ void Car::update(float gametime, int condition)
 	
 	this->dimensions.move(trans.transformPoint(this->direction) * this->velocity * SCALE_FACTOR * gametime);*/
 
-	this->rpmNgear.setString("RPM: " + std::to_string(this->engine->getRpm()) 
-							+ "\nCurrent Gear: " + std::to_string(this->engine->getGear()) 
-							+ "\nVelocity (m/s): " + std::to_string(this->velocity) 
-							+ " / " + std::to_string(this->velocity*3.6f) + "\nTotal Force: " 
-							+ std::to_string(sqrt(pow(totalForce.x, 2) + pow(totalForce.y, 2))) 
-							+ "\nEngine Thrust: " + std::to_string(this->engine->getThrust()));
+	this->rpmNgear.setString("RPM: " + std::to_string(this->engine->getRpm())
+		+ "\nCurrent Gear: " + std::to_string(this->engine->getGear())
+		+ "\nVelocity (m/s): " + std::to_string(this->velocity)
+		+ " / " + std::to_string(this->velocity*3.6f) + "\nTotal Force: "
+		+ std::to_string(sqrt(pow(resultingForce.x, 2) + pow(resultingForce.y, 2)))
+		+ "\nEngine Thrust: " + std::to_string(this->engine->getThrust())
+		+ "\nTurning angle: " + std::to_string(angle * 180 / M_PI));
 	
 }
 

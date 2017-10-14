@@ -14,7 +14,7 @@ float Driver::getThrottle()const
 }
 float Driver::getAxisX()const
 {
-	return this->x;
+	return -this->x;
 }
 bool Driver::getGearDown()const
 {

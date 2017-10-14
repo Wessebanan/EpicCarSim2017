@@ -29,26 +29,31 @@ int GrasslandCourse::init()
 
 int GrasslandCourse::getCondition(const int x, const int y)
 {
-	int returnValue = -1;
-	sf::Color currentCondition(14, 209, 69);
+	int returnValue = 0;
+
 	if (x < this->getTrackTexture().getSize().x && x > 0 && y > 0 && y < this->getTrackTexture().getSize().y)
 	{
+		sf::Color currentCondition;
 		currentCondition = this->getTrackTexture().copyToImage().getPixel(x, y);
+
+		// What color each condition have (to compare against) 
+		sf::Color grass(14, 209, 69);
+		sf::Color asphalt(88, 88, 88);
+		sf::Color water(0, 151, 219);
+
+		if (currentCondition == grass)
+			returnValue = 0;
+
+		else if (currentCondition == asphalt)
+			returnValue = 1;
+
+		else if (currentCondition == water)
+			returnValue = 2;
 	}
 
-	// What color each condition have (to compare against) 
-	sf::Color grass(14, 209, 69);		
-	sf::Color asphalt(88, 88, 88);
-	sf::Color water(0, 151, 219);
+	
 
-	if (currentCondition == grass)
-		returnValue = 0;
-
-	else if (currentCondition == asphalt)
-		returnValue = 1;
-
-	else if (currentCondition == water)
-		returnValue = 2;
+	
 
 	return returnValue;
 }
