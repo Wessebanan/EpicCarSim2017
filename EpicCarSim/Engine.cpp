@@ -5,7 +5,7 @@ Engine::Engine()
 	this->gearChanged = false;
 	this->currGear = 0; //0: Neutral, -1: Reverse.
 	this->force = 0.f;
-	this->engineBlown = false;
+	this->engineBlown = false; //If rpm goes too high, the engine is destroyed.
 }
 
 Engine::~Engine()
@@ -78,7 +78,7 @@ void Engine::update(const Driver &driver, float velocity)
 	this->torqueWheel = this->torqueEngine * this->gearRatios[this->currGear + 1] * this->finalDriveRatio;
 	this->force = this->torqueWheel / this->radius;
 
-	if (driver.getGearUp() && this->currGear < this->nGears) //Changes gear if the driver has requested
+	if (driver.getGearUp() && this->currGear < this->nGears) //Changes gear if the driver has requested it.
 	{
 		this->currGear++;
 	}

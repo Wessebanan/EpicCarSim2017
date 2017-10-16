@@ -4,6 +4,7 @@
 #define FPS_CAP_144 6.9444 //Milliseconds between frames.
 
 //All data för bilen Audi R8 5.2 FSI Quattro 2017 hämtad från http://www.automobile-catalog.com/make/audi/r8_2/r8_2_1_coupe/2017.html
+//Alla formler hämtade från kursens formelblad, kursboken och föreläsningar.
 
 int main()
 {
