@@ -18,6 +18,9 @@ Car::Car(float _width, float _length)
 	this->direction = sf::Vector2f(1.f, 0.f);							// Start direction (Where the car is pointing)
 
 	this->time = 0.0f;
+	this->startPos = sf::Vector2f(24.f, 370.f);
+	this->raceStarted = false;
+	this->raceFinished = false;
 }
 
 Car::~Car()
@@ -69,22 +72,37 @@ void Car::update(float gametime, int condition)
 		totalForce = maxForce;
 	}
 
+	if (velocity > 0.0f && !this->raceFinished)
+	{
+		this->raceStarted = true;
+	}
 	
+	if (raceStarted)
+	{
+		this->time += gametime;
+	}
+
 	// Get acceleration and apply to total velocity using elapsed time
 	float acceleration = totalForce / this->mass;
-	this->velocity += acceleration * gametime;
-	
+	this->velocity += acceleration * gametime;	
 
 	this->dimensions.move(this->direction * this->velocity * gametime * SCALE_FACTOR);
 	
+	if (this->dimensions.getPosition().x - this->startPos.x > 1472.f)
+	{
+		this->raceStarted = false;
+		this->raceFinished = true;
+	}
+
 	// Sets relevant car data into text to be displayed
 	this->rpmNgear.setString(
-		"RPM: " + std::to_string(std::floor(this->engine->getRpm()))
-		+ "\nCurrent Gear: " + std::to_string(std::floor(this->engine->getGear()))
-		+ "\nVelocity (km/h): " + std::to_string(std::floor(this->velocity*3.6f))
-		+ "\nTotal Force: " + std::to_string(std::floor(totalForce))
-		+ "\nEngine Force: " + std::to_string(std::floor(this->engine->getForce()))
-		+ "\nBrake force: " + std::to_string(std::floor(brakeForce))
+		"RPM: " + std::to_string((int)this->engine->getRpm())
+		+ "\nCurrent Gear: " + std::to_string((int)this->engine->getGear())
+		+ "\nVelocity (km/h): " + std::to_string((int)(this->velocity*3.6f))
+		+ "\nTotal Force: " + std::to_string((int)totalForce)
+		+ "\nEngine Force: " + std::to_string((int)this->engine->getForce())
+		+ "\nBrake force: " + std::to_string((int)brakeForce)
+		+ "\nTime: " + std::to_string(this->time)
 	);	
 }
 

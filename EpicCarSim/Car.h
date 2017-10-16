@@ -42,6 +42,11 @@ private:
 	sf::Vector2f skidVelocity;
 
 	float time;
+	bool raceStarted;
+	bool raceFinished;
+
+	sf::Vector2f startPos;
+
 
 public:
 	Car(float width, float length);

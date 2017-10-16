@@ -18,7 +18,7 @@ void Race::update(float gametime)
 {
 	this->car->update(gametime, this->currentCourse->getCondition(this->car->getPosition().x, this->car->getPosition().y));
 	
-	if (sf::Joystick::isButtonPressed(0, sf::Joystick::X) && this->car->engineBlown())
+	if (sf::Joystick::isButtonPressed(0, sf::Joystick::X))
 	{
 		this->setup(0, 0, 0, 0);
 	}
