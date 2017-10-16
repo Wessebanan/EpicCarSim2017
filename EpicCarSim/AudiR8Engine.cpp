@@ -3,7 +3,7 @@
 AudiR8Engine::AudiR8Engine(float radius)
 	:Engine()
 {
-	this->nGears = 7;
+	this->nGears = 7; //Number of forward gears.
 	this->gearRatios = new float[this->nGears + 2]; //+2 for neutral(0) and rev.
 
 	this->gearRatios[0] = -2.647f; //Rev
@@ -20,14 +20,14 @@ AudiR8Engine::AudiR8Engine(float radius)
 	this->rpm = 1000.f; //Engine dies below.
 	this->torqueWheel = 0.f;
 	this->torqueEngine = 285.337f; //Base torque according to regression.
-	this->power = 35.f; //Horsepower.
+	this->power = 35.f; //Horsepower according to regression.
 	this->angVelocity = this->rpm * 2.f * (float)M_PI / 60.f;
-	this->redline = 8300.0f;
-	this->baseline = 1000.0f;
+	this->redline = 8300.0f; //Redline rpm.
+	this->baseline = 1000.0f; //
 
-	this->brakeCoefficient = 0.74f;
+	this->brakeCoefficient = 0.74f; //Engine brake coefficient.
 
-	this->radius = radius;
+	this->radius = radius; //Wheel radius
 }
 
 AudiR8Engine::~AudiR8Engine()
@@ -37,9 +37,8 @@ AudiR8Engine::~AudiR8Engine()
 float AudiR8Engine::calcTorque()
 {
 	float newTorque = 0;
-	
-	newTorque = -0.000012f * pow(this->rpm, 2) + 0.137482f * this->rpm + 160.107f;
-	
+	//Calculates the maximum net engine torque for the current rpm.
+	newTorque = -0.000012f * pow(this->rpm, 2) + 0.137482f * this->rpm + 160.107f;	
 
 	return newTorque;
 }
