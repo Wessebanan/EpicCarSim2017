@@ -68,7 +68,7 @@ void Engine::update(const Driver &driver, float velocity)
 
 		//Calculates the torque of the engine, uses gross torque and adds engine brake.
 		this->torqueEngine = std::max(throttle, 0.07f) * (this->calcTorque() + this->brakeCoefficient * this->rpm / 60.0f)
-			- this->gearRatios[this->currGear + 1] / std::fabs(this->gearRatios[this->currGear + 1]) * this->brakeCoefficient * this->rpm / 60.0f;
+			- (this->gearRatios[this->currGear + 1] + 1.0f) / std::fabs(this->gearRatios[this->currGear + 1] + 1.0f) * this->brakeCoefficient * this->rpm / 60.0f;
 	}
 	else
 	{
