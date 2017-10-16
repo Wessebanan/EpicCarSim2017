@@ -2,19 +2,20 @@
 
 Car::Car(float _width, float _length)
 {
-	this->velocity = 0.0f;
-	this->arial.loadFromFile("../Fonts/arial.ttf");
-	this->rpmNgear.setFont(this->arial);
+	// Initiate all general car variables
+	this->velocity = 0.0f;												// Start Velocity
+	this->arial.loadFromFile("../Fonts/arial.ttf");						// Font for rendering text
+	this->rpmNgear.setFont(this->arial);								// Set up text output
 	this->rpmNgear.setPosition(10, 10);
 	this->rpmNgear.setColor(sf::Color::Black);
 	this->rpmNgear.setCharacterSize(24);
-	this->width = _width;
+	this->width = _width;												// Set width and lenght of car
 	this->length = _length;
 
-	this->dimensions.setSize(sf::Vector2f(this->length, this->width));
-	this->setOrigin();
+	this->dimensions.setSize(sf::Vector2f(this->length, this->width));	// Set the size dimensions of car
+	this->setOrigin();													// Sets the origin point to middle of car
 
-	this->direction = sf::Vector2f(1.f, 0.f);
+	this->direction = sf::Vector2f(1.f, 0.f);							// Start direction (Where the car is pointing)
 
 	this->time = 0.0f;
 }
@@ -34,81 +35,60 @@ Car::~Car()
 	}
 }
 
-void Car::setup(const int car, const int engine, const int wheels)
-{
-
-}
-
-float Car::turnFunction()
-{
-	float turnValue = this->driver.getAxisX();
-
-	if (this->velocity <= 5.0f)
-		return turnValue;
-
-	else if (this->velocity <= 80.0f)
-		return turnValue - 0.012f * this->velocity * turnValue;
-
-	else
-		return turnValue * 0.1f;
-
-}
 
 void Car::update(float gametime, int condition)
 {
-	this->driver.update();
-	this->engine->update(this->driver, this->velocity);
+	// Main car update function that updates every frame
 
-	float rollingFriction = 0;
+	this->driver.update();									// Updates controller input from player
+	this->engine->update(this->driver, this->velocity);		// Updates the engine
+
+	float rollingFriction = 0;		// Default values in case we're standing still
 	float dragForce = 0;
 	float brakeForce = 0;
-	float maxForce = this->wheels->getSlidingFriction() * this->mass * GRAVITY; //The friction force between tire and ground.
+	float maxForce = this->wheels->getSlidingFriction() * this->mass * GRAVITY; // The maximum force using the friction force between tire and ground.
 
-	if (std::fabs(this->velocity) > 0.05f)
+	if (std::fabs(this->velocity) > 0.05f)	// If we are currently not standing still, we calculate rolling friction and drag force
 	{
 		rollingFriction = -this->wheels->getRollingFriction() * GRAVITY * this->mass;
 		dragForce = -0.5f * 1.23f * this->area * this->Cd * pow(this->velocity, 2);
 	}
-	if (this->driver.getThrottle() < 0 && this->velocity > 0) //Active braking.
+
+	if (this->driver.getThrottle() < 0 && this->velocity > 0) // If we're Activly Braking and in motion, we calculate the brake force
 	{
 		brakeForce = this->wheels->getSlidingFriction() * this->mass * GRAVITY * this->driver.getThrottle();
 	}
+
+	// Calculate the total force that affects the car
 	float totalForce = this->engine->getForce() + rollingFriction + dragForce + brakeForce;
 	
-	
-	if (totalForce > maxForce) //Wheel spin.
+
+	// In case the total force is greater than the maximal force, the wheels skids
+	if (totalForce > maxForce)
 	{
 		totalForce = maxForce;
 	}
 
-	if (this->velocity > 0)
-	{
-		this->time += gametime;
-	}
-	if(this->time > 3.5f)
-	{ 
-		bool good = true;
-	}
 	
+	// Get acceleration and apply to total velocity using elapsed time
 	float acceleration = totalForce / this->mass;
 	this->velocity += acceleration * gametime;
 	
+
 	this->dimensions.move(this->direction * this->velocity * gametime * SCALE_FACTOR);
 	
+	// Sets relevant car data into text to be displayed
 	this->rpmNgear.setString(
-		"RPM: " + std::to_string(this->engine->getRpm())
-		+ "\nCurrent Gear: " + std::to_string(this->engine->getGear())
-		+ "\nVelocity (m/s): " + std::to_string(this->velocity)
-		+ " / " + std::to_string(this->velocity*3.6f)
-		+ "\nTotal Force: " + std::to_string(totalForce)
-		+ "\nEngine Force: " + std::to_string(this->engine->getForce())
-		+ "\nVelocity: " + std::to_string(this->velocity)
-		+ "\nThrottle: " + std::to_string(this->driver.getThrottle())
-		+ "\nBrake force: " + std::to_string(brakeForce)
+		"RPM: " + std::to_string(std::floor(this->engine->getRpm()))
+		+ "\nCurrent Gear: " + std::to_string(std::floor(this->engine->getGear()))
+		+ "\nVelocity (km/h): " + std::to_string(std::floor(this->velocity*3.6f))
+		+ "\nTotal Force: " + std::to_string(std::floor(totalForce))
+		+ "\nEngine Force: " + std::to_string(std::floor(this->engine->getForce()))
+		+ "\nBrake force: " + std::to_string(std::floor(brakeForce))
 	);	
 }
 
-sf::Vector2f Car::getPosition()
+sf::Vector2f Car::getPosition()	// Gets the car current position
 {
 	return sf::Vector2f((this->dimensions.getGlobalBounds().left + this->width / 2.f) * SCALE_FACTOR, (this->dimensions.getGlobalBounds().top + this->height / 2.f) * SCALE_FACTOR);
 }

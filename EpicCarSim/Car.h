@@ -41,15 +41,12 @@ private:
 	sf::Vector2f centripetDir;
 	sf::Vector2f skidVelocity;
 
-	float turnFunction();
-
 	float time;
 
 public:
 	Car(float width, float length);
 	~Car();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	void setup(const int car, const int engine, const int wheels);
 	void update(float gametime, int condition); //0: grass, 1: dry asphalt, 2: wet asphalt.
 
 	sf::Vector2f getPosition();
