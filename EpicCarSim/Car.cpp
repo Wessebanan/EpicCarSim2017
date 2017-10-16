@@ -11,12 +11,12 @@ Car::Car(float _width, float _length)
 	this->width = _width;
 	this->length = _length;
 
-	//this->dimensions.setPosition(10, 370);
 	this->dimensions.setSize(sf::Vector2f(this->length, this->width));
 	this->setOrigin();
 
 	this->direction = sf::Vector2f(1.f, 0.f);
-	//this->centripetDir = sf::Vector2f(1.f, 0.f);
+
+	this->time = 0.0f;
 }
 
 Car::~Car()
@@ -58,11 +58,6 @@ void Car::update(float gametime, int condition)
 {
 	this->driver.update();
 	this->engine->update(this->driver, this->velocity);
-	this->wheels->calcFriction(condition);
-
-	//float turn = 0.0f;
-	//sf::Vector2f forwardForce = this->engine->getThrust() * this->direction; //Thrust force in car direction.
-	//sf::Vector2f sidewaysForce(0.f, 0.f);
 
 	float rollingFriction = 0;
 	float dragForce = 0;
@@ -71,29 +66,14 @@ void Car::update(float gametime, int condition)
 
 	if (std::fabs(this->velocity) > 0.05f)
 	{
-		//turn = this->turnFunction();
 		rollingFriction = -this->wheels->getRollingFriction() * GRAVITY * this->mass;
 		dragForce = -0.5f * 1.23f * this->area * this->Cd * pow(this->velocity, 2);
 	}
 	if (this->driver.getThrottle() < 0 && this->velocity > 0) //Active braking.
 	{
-		brakeForce = this->brakeCoefficient * this->mass * GRAVITY * this->driver.getThrottle();
+		brakeForce = this->wheels->getSlidingFriction() * this->mass * GRAVITY * this->driver.getThrottle();
 	}
 	float totalForce = this->engine->getForce() + rollingFriction + dragForce + brakeForce;
-
-	//if (totalForce <= 1.0f)
-	//	totalForce = 1.0f;
-	//float angle = this->velocity * sin(turn * M_PI / 4.f) * gametime / this->length;
-	//float forwardForce = this->direction * totalForce * cos(angle);
-	//sf::Vector2f sidewaysForce = this->centripetDir * totalForce * sin(angle)*/
-	//if ((this->driver.getAxisX() < -0.05f || this->driver.getAxisX() > 0.05f) && (this->velocity > 0.05f || this->velocity < -0.05f))
-	//{ //TODO: non-instant turning.
-	//	float radius = this->length / sin(-this->driver.getAxisX() * M_PI / 4); //Turning radius if turning.
-	//	sidewaysForce = (this->mass * pow(this->velocity, 2) / radius) * this->centripetDir; //Centripetal force if turning.
-	//}		
-	//if (this->vecLength(sidewaysForce) > maxForce)
-	//{
-	//	sidewaysForce = maxForce * sidewaysForce / vecLength(sidewaysForce);
 	
 	
 	if (totalForce > maxForce) //Wheel spin.
@@ -101,69 +81,20 @@ void Car::update(float gametime, int condition)
 		totalForce = maxForce;
 	}
 
-
-
-	//sf::Vector2f resultingForce = forwardForce + sidewaysForce;
-	//sf::Vector2f acceleration = forwardForce / this->mass;
-	//sf::Vector2f velocityVec = this->direction * this->velocity;
-	//velocityVec += acceleration * gametime;							//TODO: change sign based on direction of force.
-
+	if (this->velocity > 0)
+	{
+		this->time += gametime;
+	}
+	if(this->time > 3.5f)
+	{ 
+		bool good = true;
+	}
+	
 	float acceleration = totalForce / this->mass;
 	this->velocity += acceleration * gametime;
 	
-
 	this->dimensions.move(this->direction * this->velocity * gametime * SCALE_FACTOR);
 	
-	//this->velocity = this->vecLength(velocityVec);// *sign;
-	//if (std::fabs(turn) > 0.05f && std::fabs(this->velocity) > 0.05f)
-	//{
-	//	float rotation = -1.0f * turn / abs(turn) * acos(this->direction.x * resultingForce.x / this->vecLength(resultingForce) + this->direction.y * resultingForce.y / this->vecLength(resultingForce));
-	//	this->dimensions.rotate(angle * 180 / M_PI * -1.0f);
-	//	//this->trans.rotate(angle * 180 / M_PI * -1.0f);
-	//	this->direction = totalForce / std::fabs(totalForce) * resultingForce / totalForce;
-	//	this->centripetDir = sf::Vector2f(this->direction.y, -this->direction.x);
-	//}
-	//float rotAngle = this->velocity * gametime * ANGLE_CONVERSION / this->length * sin(this->driver.getAxisX() * M_PI / 4.f);
-	//if ((this->velocity > 0.05f || this->velocity < -0.05f) && (rotAngle > 0.05f || rotAngle < -0.05f))
-	//{
-	//	this->dimensions.rotate(rotAngle);
-	//	this->trans.rotate(rotAngle);
-	//}
-	//float dragForce = 0.5f * 1.23f * this->area * this->Cd * pow(this->velocity, 2);	
-	//float frictionForce = 0.0f;
-	//float brakeForce = 0.0f;
-	//if (this->velocity > 0.5f || this->velocity < -0.5f)
-	//{
-	//	frictionForce = this->mass * this->wheels->getRollingFriction() * GRAVITY;
-	//}
-	//float maxForce = this->wheels->getSlidingFriction() * this->mass * GRAVITY;
-	//float force = this->engine->getThrust() - dragForce - frictionForce;
-	//if (force > maxForce)
-	//{
-	//	force = maxForce;
-	//}
-	//else if (force < -maxForce)
-	//{
-	//	force = -maxForce;
-	//}
-	//this->velocity += (force / this->mass) * gametime;
-	//
-	//float rotAngle = this->velocity * gametime * ANGLE_CONVERSION / this->length * sin(this->driver.getAxisX() * M_PI / 4.f);
-	//float radius = this->length / sin(this->driver.getAxisX() * M_PI / 4);
-	//
-	//float centripetForce = this->mass * pow(this->velocity, 2) / radius;
-	//if ((this->velocity > 0.05f || this->velocity < -0.05f) && (rotAngle > 0.05f || rotAngle < -0.05f))
-	//{
-	//	this->dimensions.rotate(rotAngle);
-	//	this->trans.rotate(rotAngle);		
-	//}
-	//if ((this->driver.getAxisX() > 0.05f) && (this->driver.getAxisX() < -0.05f))
-	//{
-	//	this->dimensions.move(radius * cos(this->driver.getAxisX() * M_PI / 4.f), radius * sin(this->driver.getAxisX() * M_PI / 4.f));
-	//}	
-	//
-	//this->dimensions.move(trans.transformPoint(this->direction) * this->velocity * SCALE_FACTOR * gametime);
-
 	this->rpmNgear.setString(
 		"RPM: " + std::to_string(this->engine->getRpm())
 		+ "\nCurrent Gear: " + std::to_string(this->engine->getGear())
@@ -174,8 +105,7 @@ void Car::update(float gametime, int condition)
 		+ "\nVelocity: " + std::to_string(this->velocity)
 		+ "\nThrottle: " + std::to_string(this->driver.getThrottle())
 		+ "\nBrake force: " + std::to_string(brakeForce)
-	);
-	
+	);	
 }
 
 sf::Vector2f Car::getPosition()

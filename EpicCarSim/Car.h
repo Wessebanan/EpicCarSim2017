@@ -43,6 +43,8 @@ private:
 
 	float turnFunction();
 
+	float time;
+
 public:
 	Car(float width, float length);
 	~Car();

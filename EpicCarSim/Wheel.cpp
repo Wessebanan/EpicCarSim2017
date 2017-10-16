@@ -3,8 +3,8 @@
 Wheel::Wheel(float radius)
 {
 	this->radius = radius;
-	this->rollingFriction = 0.0f;
-	this->slidingFriction = 0.0f;
+	this->rollingFriction = 0.014f;
+	this->slidingFriction = 1.0f;
 }
 
 Wheel::~Wheel()
